@@ -2,49 +2,21 @@ clear all
 %
 % t-CycIF ASHLAR ANALYSIS PIPELINE 
 % Before starting: Stitch and register the fields into an "ome.tif" by using ASHLAR (https://doi.org/10.1101/2021.04.20.440625)
-% Step 1:(RUN_Step1_new_fields_preilastik_crops.m) Cut the "ome.tif" into 
-% fields of a size specified by the user and cut crops out of each field 
+% Step 1:(Step1_fields_preilastik.m) Cuts the "ome.tif" into fields of a size specified by the user and cut crops out of each field 
 % for Ilastik training. Create full stacks of all cycles and channels. 
-% Omits fields that have no cells. Please note that if the stacks produced by Matlab are not recognized as multichannel image
-% the addition RUN_
-% Step 2: Create segmentation probabilities using Ilastik
-% Step 3:(RUN_Step3_segmentfromilastik.m) Segment based on segmentation
-% probabilities produce by Ilastik
-% Step 4: (RUN_Step4_CycIF_measurments_ilastik.m) Makes measurements of
-% signal and foci segmentation 
+% Step 2: (Step2b_filtercrops_v2.m) OPTIONAL Omits fields that have no cells. 
+% Please note that if the stacks produced by Matlab are not recognized as multichannel image % the addition 
+% RUN_Step2_changetifffromZtoXhannel_yescrops_O2.ijm needs to be run in Fiji/ImageJ (https://imagej.net/software/fiji/)
+% Step 2: (needs to be run externally through Ilastik https://www.ilastik.org/) Create segmentation probabilities using Ilastik
+% Step 3: (Step3_segmentfromilastik_v2_LabelAndDilate.m) Segment based on probabilities produced by Ilastik
+% Step 4: (Step4_CycIF_measurements_ilastik_v2.m) Makes measurements of signal and foci segmentation 
 % 
 % In order to begin the analysis a set of parameters are needed to be
 % defined by the user 
 % 1) where the files are located and how the names are formatted
-% 2) parameters to choose the size of the field and number of crops per
-% field 
+% 2) parameters to choose the size of the field and number of crops per field
+% 3) parameters for cell segmentation - e.g. cell size, probability thresholds
 
-%%% OUTPUTS FILES AND LOCATIONS 
-% Step 1:
-% FullStacks: AllTheRawData\OmeTifName\FullStacks\OmeTifName_Field_row_column.tif
-% CroppedStacks: AllTheRawData\OmeTifName\CroppedData\OmeTifName_Field_row_column_#ofCrop.tif
-% Coordinates: AllTheRawData\Coordinates_FullStacks\OmeTifName.mat 
-% y= # of pixels in 1 column; x = # of pixels in 1 row ; t = size of field desired 
-% Coordinates Matrix: Coordinates.Field(row,column) = [keep field (0= no, 1=yes), x1, x2, y1, y2]
-% Montage: AllTheRawData\MontageforROI\OmeTifName_montage.tif 
-% Step 3:
-% Segmented Images: AllTheRawData\ANALYSIS\OmeTifName\Ilastik_Segmentation\OmeTifName_Field_row_column_Seg.tif
-% Check Segmented Images: AllTheRawData\ANALYSIS\OmeTifName\Ilastik_Segmentation\OmeTifName_Field_row_column_checkseg.tif
-% Step 4: 
-% Nucleus & Cytoplasm SegmentedImages: AllTheRawData\ANALYSIS\OmeTifName\Ilastik_Segmentation\OmeTifName_Field_row_column_NucCytSeg.tif
-% Foci Segmented Images: AllTheRawData\ANALYSIS\OmeTifName\Foci_Segmentation\OmeTifName_Field_row_column__HSF1_FociSeg.tif
-% Foci Check Segmented Images: AllTheRawData\ANALYSIS\OmeTifName\Foci_Segmentation\OmeTifName_Field_row_column__HSF1_FociSeg_check.tif
-% Measurments file: Results_data.mat 
-% Step 5:
-% ROI_pixels: AllTheRawData\ROIpixels\OmeTifName\ROI_pixels.mat: matrix of pixel locations (x,y) of ROIs, vector of row indexes of Centroids that are within the ROI  
-
-
-%%% INPUT FILE LOCATION AND FORMATTING
-%
-% The code will run on the Ilastik Probabilities file and FullStacks file 
-% The expected file structure is that a master folder will contain all of
-% the "ome.tif" data and within that folder, a folder called "ANALYSIS\"
-% will contain all the Ilastik Probabilities and FullStacks data 
 %
 %%% IMPORTANT: Ilastik Output Filename Format for Export Options
 % {dataset_dir}/Ilastik_Probabilities/{nickname}_Probabilities.tif
