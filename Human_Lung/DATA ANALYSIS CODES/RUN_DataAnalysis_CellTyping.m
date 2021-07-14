@@ -269,32 +269,3 @@ end
 if options.figOpt == 0
     close all
 end
-
-
-
-
-
-%% run some tests!
-% 
-% celltype = sortrows(CellType.Matrix,[1 2 3 4]);
-% ju = CellType.layerjump;
-% 
-% figure
-% subplot(1,4,1)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),floor(celltype(:,3)/ju^2),floor(celltype(:,4)/ju^3)])
-% caxis([0 4])
-% subplot(1,4,2)
-% imagesc([celltype(:,1),celltype(:,2)-celltype(:,1)*ju, floor((celltype(:,3)-celltype(:,1)*ju^2)/ju) , floor((celltype(:,4)-celltype(:,1)*ju^3)/ju^2)])
-% caxis([0 4])
-% subplot(1,4,3)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),celltype(:,3)-celltype(:,2)*ju , floor((celltype(:,4)-celltype(:,2)*ju^2)/ju)])
-% caxis([0 4])
-% subplot(1,4,4)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),floor(celltype(:,3)/ju^2), celltype(:,4)-celltype(:,3)*ju])
-% caxis([0 4])
-
-%%
-
-
-
-
