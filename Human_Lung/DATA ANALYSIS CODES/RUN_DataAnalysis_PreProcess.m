@@ -32,8 +32,8 @@ options.Filtering.Index_Names = filename.tissues;
 options.Filtering.thresholds.foldDAPI_th = 0.5;
 options.Filtering.thresholds.absDAPI_th = 9;
 options.Filtering.thresholds.solidity = 0.8;
-options.Filtering.thresholds.area_low = 50;    % was 50   in previous analysis
-options.Filtering.thresholds.area_high = 1000;  % was 2000 in previous analysis..
+options.Filtering.thresholds.area_low = 50;    
+options.Filtering.thresholds.area_high = 1000; 
 options.Filtering.maxround = options.maxround;
 
 % STEP 3: additional parameters for normalization
