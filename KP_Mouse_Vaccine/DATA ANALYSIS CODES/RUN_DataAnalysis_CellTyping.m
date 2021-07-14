@@ -16,7 +16,6 @@ load([ analfolder resufolder 'Results_Aggr_' date '.mat'])
 load([ analfolder resufolder 'Results_Morp_' date '.mat'])
 load([ analfolder resufolder 'Results_Norm_' date '.mat'])
 load([ analfolder resufolder 'Results_Filt_' date '.mat'])
-% load([ analfolder resufolder 'Results_ROI_' date '.mat'])
 load([ analfolder resufolder 'Results_Settings_' date '.mat'])
 
 filename.basefolder = basefolder;
@@ -105,11 +104,9 @@ for layer = 1:max(CellType.layer)
             temp_ind = ones(totcells,1);
             temp_prob= zeros(totcells,1)+NaN;
             for i4 = 1:length(crit)
-%                 crit_ind = sign(crit(i4)) * NormResults.MedianNucNorm(:,abs(crit(i4))) > 0 ;%.* uint16(Filter.all(:,abs(crit(i4)))) 
                 crit_ind = sign(crit(i4)) * TypeData(:,abs(crit(i4))) > 0 ;%.* uint16(Filter.all(:,abs(crit(i4)))) 
                 temp_ind = temp_ind & crit_ind;
                 if sign(crit(i4)) > 0
-%                     test = crit_ind.*double(NormResults.MedianNucNorm(:,crit(i4)));
                     test = crit_ind.*double(TypeData(:,crit(i4)));
                     test(test==0) = NaN;
                     temp_prob = min([temp_prob, test],[],2);
@@ -267,32 +264,3 @@ end
 if options.figOpt == 0
     close all
 end
-
-
-
-
-
-%% run some tests!
-% 
-% celltype = sortrows(CellType.Matrix,[1 2 3 4]);
-% ju = CellType.layerjump;
-% 
-% figure
-% subplot(1,4,1)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),floor(celltype(:,3)/ju^2),floor(celltype(:,4)/ju^3)])
-% caxis([0 4])
-% subplot(1,4,2)
-% imagesc([celltype(:,1),celltype(:,2)-celltype(:,1)*ju, floor((celltype(:,3)-celltype(:,1)*ju^2)/ju) , floor((celltype(:,4)-celltype(:,1)*ju^3)/ju^2)])
-% caxis([0 4])
-% subplot(1,4,3)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),celltype(:,3)-celltype(:,2)*ju , floor((celltype(:,4)-celltype(:,2)*ju^2)/ju)])
-% caxis([0 4])
-% subplot(1,4,4)
-% imagesc([celltype(:,1),floor(celltype(:,2)/ju),floor(celltype(:,3)/ju^2), celltype(:,4)-celltype(:,3)*ju])
-% caxis([0 4])
-
-%%
-
-
-
-
