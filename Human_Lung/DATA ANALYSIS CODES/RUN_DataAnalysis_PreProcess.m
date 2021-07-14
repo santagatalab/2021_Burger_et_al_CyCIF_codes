@@ -1,17 +1,9 @@
 clear all
 %%%
-% codedir = 'Z:\data\IN_Cell_Analyzer_6000\Giorgio\CycIF Codes\Utility Functions';
-% addpath(codedir)
-% addpath('...\normalization\functions\')
-    % ^ where the normalization codes are found
-%%%
-filename.basefolder = 'Y:\sorger\data\IN_Cell_Analyzer_6000\Giorgio\2020-10_Human_Lung_DataAnalysis\2020-10_HumanLung\';
+filename.basefolder = '2020-10_HumanLung\';
 filename.suffix = '_Results_20201114.mat';
 filename.analfolder = [filename.basefolder 'ANALYSIS\'];
 filename.resufolder = 'Results_20201114\'; 
-% filename.roifolder  = 'ROIs\';
-% filename.montfolder = 'TumorMasks\MontageforROI_Lv3\';
-% filename.montsuffix = '_montage.tif';
 
 filename.folders = {'CASE1', 'CASE7','CASE8','CASE9','CASE10', ...
                     'CASE11','CASE12','CASE13','CASE14','CASE15',...
@@ -54,17 +46,7 @@ options.Norm.Channels = setdiff(1:length(options.Markers), 1:4:length(options.Ma
 options.Norm.Priors = zeros(length(options.Markers),1); 
 options.Norm.OverExpr = zeros(length(options.Markers),1);
 options.Norm.CellNum = 50000;
-
-% % STEP 4: roi extracting
-% options.tifnames.Aiforia = {'TumorGrade1.tif','TumorGrade2.tif','TumorGrade3.tif'};
-% options.tifnames.Path = {'Tumors.tif','Blood.tif','Spleen.tif'};
-% options.ROI.pyramidlevel = 4;
-% 
-% % STEP 5: ROI Masking
-% options.ROI.pyramidlevel = 2; % where full size is 0
-% options.ROI.FigOpt = true;
-% options.ROI.date = '20200424';                 
-
+      
 save([filename.analfolder filename.resufolder 'Results_Settings_' options.date '.mat'],'filename','options')
 
 %% Step 1 aggregate tissues together
